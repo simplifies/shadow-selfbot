@@ -1,7 +1,7 @@
 import discord
 from datetime import datetime
 from discord.ext import commands
-from main import PREFIX, bot
+from main import PREFIX, bot, EMBEDCOLOUR
 
 
 class Moderation(commands.Cog):
@@ -15,7 +15,7 @@ class Moderation(commands.Cog):
 `{PREFIX}`**kick [@member] (reason)** » Kick a user from the command server.
 `{PREFIX}`**mute [@member] (reason)** » Mute a user from the command server.
 `{PREFIX}`**unmute [@member] (reason)** » Unmute a user from the command server.
-        """, color=discord.Color.blue())
+        """, color=EMBEDCOLOUR)
         embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
         embed.timestamp = datetime.now()
         await ctx.send(embed=embed)
@@ -26,7 +26,7 @@ class Moderation(commands.Cog):
             await member.ban()
 
             try:
-                embed = discord.Embed(title=f"🔨 {member.name} was banned!", description = f"Reason: {reason}", color=discord.Color.blue())
+                embed = discord.Embed(title=f"🔨 {member.name} was banned!", description = f"Reason: {reason}", color=EMBEDCOLOUR)
                 embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
                 embed.timestamp = datetime.now()
                 await ctx.send(embed=embed)
@@ -39,7 +39,7 @@ class Moderation(commands.Cog):
             await member.kick(reason=reason)
 
             try:
-                embed = discord.Embed(title=f"👢 {member.name} was kicked!", description = f"Reason: {reason}", color=discord.Color.blue())
+                embed = discord.Embed(title=f"👢 {member.name} was kicked!", description = f"Reason: {reason}", color=EMBEDCOLOUR)
                 embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
                 embed.timestamp = datetime.now()
                 await ctx.send(embed=embed)
@@ -53,7 +53,7 @@ class Moderation(commands.Cog):
             await member.add_roles(mutedRole)
 
             try:
-                embed = discord.Embed(title=f"🤐 {member.name} was muted!", description = f"Reason: {reason}", color=discord.Color.blue())
+                embed = discord.Embed(title=f"🤐 {member.name} was muted!", description = f"Reason: {reason}", color=EMBEDCOLOUR)
                 embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
                 embed.timestamp = datetime.now()
                 await ctx.send(embed=embed)
@@ -67,7 +67,7 @@ class Moderation(commands.Cog):
             await member.remove_roles(mutedRole)
 
             try:
-                embed = discord.Embed(title=f"😀 {member.name} was unmuted!", description = f"Reason: {reason}", color=discord.Color.blue())
+                embed = discord.Embed(title=f"😀 {member.name} was unmuted!", description = f"Reason: {reason}", color=EMBEDCOLOUR)
                 embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
                 embed.timestamp = datetime.now()
                 await ctx.send(embed=embed)
