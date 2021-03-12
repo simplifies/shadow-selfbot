@@ -8,4 +8,5 @@ A completely free open source Discord selfbot made in python!
 - Finally, you now have shadow setup and ready to run!  
 
 ### Support
-For support either create an issue with the label Support or join our Discord server.
+For support either create an issue with the label Support or join our Discord server.  
+- Discord server: https://discord.gg/Cau4ZHFqBF
