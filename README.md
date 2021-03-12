@@ -1,5 +1,5 @@
 # Shadow
-A completely free open source Discord selfbot made in python!
+A completely free open source Discord selfbot made in Python!
 
 ### Install Guide
 - First, download a release.  
