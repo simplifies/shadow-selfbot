@@ -19,10 +19,14 @@ class Main(commands.Cog):
 `{PREFIX}`**text** » All available text commands.
 `{PREFIX}`**misc** » All available misc commands.
 `{PREFIX}`**info** » All available info commands.
+`{PREFIX}`**share** » All available share commands.
 `{PREFIX}`**moderation** » All available moderation commands.
 
 `{PREFIX}`**search [term]** » Search through Shadow.
 `{PREFIX}`**help [command]** » Get help with a command.
+
+Checkout Shadow!
+https://discord.gg/Cau4ZHFqBF
 """,
                                   color=EMBEDCOLOUR)
             embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
@@ -45,20 +49,22 @@ class Main(commands.Cog):
         if command is not None:
             text = ""
             text2 = ""
+            searchedItems = 0
             for cmd in bot.commands:
                 if command in cmd.name or command in cmd.description:
+                    searchedItems += 1
                     text += f"`{PREFIX}`**{cmd.name}{cmd.usage}** » {cmd.description}\n"
                     text2 += f"{PREFIX}{cmd.name}{cmd.usage} » {cmd.description}\n"
 
             try:
                 embed = discord.Embed(title="🔎 Search results...",
-                                      description=f"{text}",
+                                      description=f"Found `{searchedItems}` items for `{command}`.\n\n{text}",
                                       color=EMBEDCOLOUR)
                 embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
                 embed.timestamp = datetime.now()
                 await ctx.send(embed=embed)
             except discord.HTTPException:
-                await ctx.send(f"**🔎 Search results...**\n{text2}")
+                await ctx.send(f"**🔎 Search results...**\nFound `{searchedItems}` items for `{command}`.\n\n{text2}")
 
 
 def setup(bot):

@@ -1,4 +1,4 @@
-VERSION = "1.2"
+VERSION = "1.3"
 
 import os
 import sys
@@ -36,7 +36,12 @@ if json.load(open("config/config.json"))["prefix"] == "":
 
 TOKEN = json.load(open("config/config.json"))["token"]
 PREFIX = json.load(open("config/config.json"))["prefix"]
+
+SHAREPREFIX = json.load(open("config/config.json"))["share_commands"]["prefix"]
+SHARECOMMANDS = json.load(open("config/config.json"))["share_commands"]["enabled"]
+
 EMBEDCOLOUR = int("#E0E0E0".replace("#", "0x"), 0)
+PUREEMBEDCOLOUR = "#E0E0E0"
 
 bot = commands.Bot(command_prefix=PREFIX, self_bot=True)
 bot.remove_command("help")
@@ -45,6 +50,7 @@ bot.load_extension("cogs.fun")
 bot.load_extension("cogs.info")
 bot.load_extension("cogs.misc")
 bot.load_extension("cogs.text")
+bot.load_extension("cogs.sharecmds")
 bot.load_extension("cogs.main")
 
 __consolecolour__ = "#E0E0E0"
@@ -69,6 +75,8 @@ fg.cWhite = Style(RgbFg(255, 255, 255))
 
 def print_cmd(command):
     print(f"{fg.consoleColour}[{fg.cWhite}" + datetime.now().strftime("%H:%M:%S") + f"{fg.consoleColour}]{fg.cWhite} | {fg.consoleColour}[{fg.cWhite}Command{fg.consoleColour}] {fg.cWhite}{command}")
+def print_sharecmd(user, command):
+    print(f"{fg.consoleColour}[{fg.cWhite}" + datetime.now().strftime("%H:%M:%S") + f"{fg.consoleColour}]{fg.cWhite} | {fg.consoleColour}[{fg.cWhite}Share Command{fg.consoleColour}] {fg.cWhite}({user}) {command}")
 def print_error(error):
     print(f"{fg.consoleColour}[{fg.cWhite}" + datetime.now().strftime("%H:%M:%S") + f"{fg.consoleColour}]{fg.cWhite} | {fg.consoleColour}[{fg.cWhite}Error{fg.consoleColour}] {fg.cWhite}{error}")
 def restart_bot():
