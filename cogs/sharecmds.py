@@ -26,8 +26,24 @@ class ShareCmds(commands.Cog):
                                   description=f"Share commands are disabled.",
                                   color=EMBEDCOLOUR)
         embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+        embed.set_thumbnail(url=main.EMBEDIMAGE)
         embed.timestamp = datetime.now()
-        await ctx.send(embed=embed)
+        try:
+            await ctx.send(embed=embed)
+        except discord.HTTPException:
+            if SHARECOMMANDS is True:
+                await ctx.send(f"""**🤝 Share Commands**
+
+`{SHAREPREFIX}`**bold [message]** » Send messages in bold.
+`{SHAREPREFIX}`**italic [message]** » Send messages in italic.
+`{SHAREPREFIX}`**secret [message]** » Send messages in secret.
+`{SHAREPREFIX}`**code [message]** » Send messages in code.
+`{SHAREPREFIX}`**embed [message]** » Send messages in an embedded message.
+                """)
+            else:
+                await ctx.send(f"""**🤝 Share Commands**
+Share commands are disabled.
+                """)
 
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -45,6 +61,7 @@ class ShareCmds(commands.Cog):
                     """,
                                           color=EMBEDCOLOUR)
                     embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+                    embed.set_thumbnail(url=main.EMBEDIMAGE)
                     embed.timestamp = datetime.now()
                     await message.channel.send(embed=embed)
                 except discord.HTTPException:

@@ -1,5 +1,9 @@
 import discord
 import asyncio
+import requests
+import urllib
+import main
+import base64
 from datetime import datetime
 from discord.ext import commands
 from main import PREFIX, bot, EMBEDCOLOUR, PUREEMBEDCOLOUR
@@ -11,8 +15,12 @@ class Text(commands.Cog):
 
     @commands.command(name="text", description="Main text command.", usage="")
     async def text(self, ctx):
-        embed = discord.Embed(title="📝 Text Commands",
-                              description=f"""
+        try:
+            embed = discord.Embed(title="📝 Text Commands",
+                                  description=f"""
+`{PREFIX}`**base64 [message]** » Encrypt your messages using Base64
+`{PREFIX}`**base64decode [message]** » Decrypt a Base64 message.
+`{PREFIX}`**suggest [suggestion]** » Make a suggestion.
 `{PREFIX}`**cembed [title] (description) (colour) (showtime yes/no)** » Create a custom embedded message.
 `{PREFIX}`**embed [title]** » Create an embedded message.
 `{PREFIX}`**secret [message]** » Send all your messages in a secret block.
@@ -23,6 +31,8 @@ class Text(commands.Cog):
 `{PREFIX}`**aesthetic [message]** » Send your messages s p a c e d out.
 `{PREFIX}`**animate [message]** » Animate your messages.
 `{PREFIX}`**chatbypass [message]** » Send your messages in a different font.
+`{PREFIX}`**regional [message]** » Convert your messages into emojis.
+`{PREFIX}`**ascii [message]** » Send a message in ascii art.
 `{PREFIX}`**bold [message]** » Send all your messages in bold.
 `{PREFIX}`**italic [message]** » Send all your messages in italics.
 `{PREFIX}`**cpp [message]** » Send all your messages in a C++ code block.
@@ -36,11 +46,116 @@ class Text(commands.Cog):
 `{PREFIX}`**css [message]** » Send all your messages in a CSS code block.
 `{PREFIX}`**yaml [message]** » Send all your messages in a YAML code block.
 `{PREFIX}`**json [message]** » Send all your messages in a JSON code block.
-""",
-                              color=EMBEDCOLOUR)
-        embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
-        embed.timestamp = datetime.now()
-        await ctx.send(embed=embed)
+    """,
+                                  color=EMBEDCOLOUR)
+            embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
+            embed.timestamp = datetime.now()
+            await ctx.send(embed=embed)
+        except discord.HTTPException:
+            await ctx.send(f"""**📝 Text Commands**
+
+`{PREFIX}`**base64 [message]** » Encrypt your messages using Base64
+`{PREFIX}`**base64decode [message]** » Decrypt a Base64 message.
+`{PREFIX}`**suggest [suggestion]** » Make a suggestion.
+`{PREFIX}`**cembed [title] (description) (colour) (showtime yes/no)** » Create a custom embedded message.
+`{PREFIX}`**embed [title]** » Create an embedded message.
+`{PREFIX}`**secret [message]** » Send all your messages in a secret block.
+`{PREFIX}`**secretletters [message]** » Put all lettes from your message into separate secret blocks.
+`{PREFIX}`**purgehack** » Purge messages without permission.
+`{PREFIX}`**uppercase [message]** » Send your message in uppercase.
+`{PREFIX}`**lowercase [message]** » Send your message in lowercase.
+`{PREFIX}`**aesthetic [message]** » Send your messages s p a c e d out.
+`{PREFIX}`**animate [message]** » Animate your messages.
+`{PREFIX}`**chatbypass [message]** » Send your messages in a different font.
+`{PREFIX}`**regional [message]** » Convert your messages into emojis.
+`{PREFIX}`**ascii [message]** » Send a message in ascii art.
+`{PREFIX}`**bold [message]** » Send all your messages in bold.
+`{PREFIX}`**italic [message]** » Send all your messages in italics.
+`{PREFIX}`**cpp [message]** » Send all your messages in a C++ code block.
+`{PREFIX}`**cs [message]** » Send all your messages in a C Sharp code block.
+`{PREFIX}`**java [message]** » Send all your messages in a Java code block.
+`{PREFIX}`**python [message]** » Send all your messages in a Python code block.
+`{PREFIX}`**js [message]** » Send all your messages in a JavaScript code block.
+`{PREFIX}`**lua [message]** » Send all your messages in a Lua code block.
+`{PREFIX}`**php [message]** » Send all your messages in a PHP code block.
+`{PREFIX}`**html [message]** » Send all your messages in a HTML code block.
+`{PREFIX}`**css [message]** » Send all your messages in a CSS code block.
+`{PREFIX}`**yaml [message]** » Send all your messages in a YAML code block.
+`{PREFIX}`**json [message]** » Send all your messages in a JSON code block.
+                                """)
+
+    @commands.command(name="regional", description="Convert your messages into emojis.", usage=" [message]")
+    async def regional(self, ctx, *, message):
+        text = message.lower()
+
+        regional_indicators = {
+        'a': '<:regional_indicator_a:803940414524620800>',
+        'b': '<:regional_indicator_b:803940414524620800>',
+        'c': '<:regional_indicator_c:803940414524620800>',
+        'd': '<:regional_indicator_d:803940414524620800>',
+        'e': '<:regional_indicator_e:803940414524620800>',
+        'f': '<:regional_indicator_f:803940414524620800>',
+        'g': '<:regional_indicator_g:803940414524620800>',
+        'h': '<:regional_indicator_h:803940414524620800>',
+        'i': '<:regional_indicator_i:803940414524620800>',
+        'j': '<:regional_indicator_j:803940414524620800>',
+        'k': '<:regional_indicator_k:803940414524620800>',
+        'l': '<:regional_indicator_l:803940414524620800>',
+        'm': '<:regional_indicator_m:803940414524620800>',
+        'n': '<:regional_indicator_n:803940414524620800>',
+        'o': '<:regional_indicator_o:803940414524620800>',
+        'p': '<:regional_indicator_p:803940414524620800>',
+        'q': '<:regional_indicator_q:803940414524620800>',
+        'r': '<:regional_indicator_r:803940414524620800>',
+        's': '<:regional_indicator_s:803940414524620800>',
+        't': '<:regional_indicator_t:803940414524620800>',
+        'u': '<:regional_indicator_u:803940414524620800>',
+        'v': '<:regional_indicator_v:803940414524620800>',
+        'w': '<:regional_indicator_w:803940414524620800>',
+        'x': '<:regional_indicator_x:803940414524620800>',
+        'y': '<:regional_indicator_y:803940414524620800>',
+        'z': '<:regional_indicator_z:803940414524620800>'
+        }
+
+        output = ""
+        text = list(text)
+        for letter in text:
+            if letter in regional_indicators:
+                output = output + regional_indicators[letter] + " "
+            else:
+                output = output + letter
+        await ctx.send(output)
+
+    @commands.command(name="base64", description="Encrypt your messages using Base64", usage=" [message]")
+    async def base64(self, ctx, *, message):
+        message_bytes = message.encode('ascii')
+        base64_bytes = base64.b64encode(message_bytes)
+        base64_message = base64_bytes.decode('ascii')
+
+        await ctx.send(base64_message)
+
+    @commands.command(name="base64decode", description="Decrypt a Base64 message.", usage=" [message]")
+    async def base64decode(self, ctx, *, message):
+        base64_bytes = message.encode('ascii')
+        message_bytes = base64.b64decode(base64_bytes)
+        decoded = message_bytes.decode('ascii')
+
+        await ctx.send(decoded)
+
+    @commands.command(name="suggest", description="Make a suggestion.", usage=" [suggestion]")
+    async def suggest(self, ctx, *, suggestion):
+        try:
+            embed = discord.Embed(title="💭 Suggestion", description=suggestion, color=EMBEDCOLOUR)
+            embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
+            embed.timestamp = datetime.now()
+            msg = await ctx.send(embed=embed)
+        except discord.HTTPException:
+            msg = await ctx.send(f"**💭 Suggestion**\n{suggestion}")
+
+        await msg.add_reaction('\U0001F44D')
+        await msg.add_reaction('\U0001F44E')
 
     @commands.command(name="secret", description="Send all your messages in a secret block.", usage=" [message]")
     async def secret(self, ctx, *, message):
@@ -72,10 +187,8 @@ class Text(commands.Cog):
 
     @commands.command(name="aesthetic", description="Send your messages s p a c e d out.", usage=" [message]")
     async def aesthetic(self, ctx, *, message):
-        def split(word):
-            return list(word)
         msg = ""
-        for letter in split(message):
+        for letter in main.split(message):
             msg += " " + letter +  " "
         await ctx.send(msg)
 
@@ -207,10 +320,16 @@ class Text(commands.Cog):
         try:
             embed = discord.Embed(title=title, color=colour)
             embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
             embed.timestamp = datetime.now()
             await ctx.send(embed=embed)
         except discord.HTTPException:
             pass
+
+    @commands.command(name="ascii", description="Send a message in ascii art.", usage=" [message]")
+    async def ascii(self, ctx, *, message):
+        art = requests.get(f'http://artii.herokuapp.com/make?text={urllib.parse.quote_plus(message)}+&font=standard').text
+        await ctx.send(f"```{art}```")
 
 def setup(bot):
     bot.add_cog(Text(bot))

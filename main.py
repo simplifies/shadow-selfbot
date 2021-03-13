@@ -1,4 +1,4 @@
-VERSION = "1.3"
+VERSION = "1.4"
 
 import os
 import sys
@@ -40,8 +40,9 @@ PREFIX = json.load(open("config/config.json"))["prefix"]
 SHAREPREFIX = json.load(open("config/config.json"))["share_commands"]["prefix"]
 SHARECOMMANDS = json.load(open("config/config.json"))["share_commands"]["enabled"]
 
-EMBEDCOLOUR = int("#E0E0E0".replace("#", "0x"), 0)
-PUREEMBEDCOLOUR = "#E0E0E0"
+PUREEMBEDCOLOUR = "#A7A7A7"
+EMBEDCOLOUR = int(PUREEMBEDCOLOUR.replace("#", "0x"), 0)
+EMBEDIMAGE = "https://ghost.cool/assets/shadow.jpg"
 
 bot = commands.Bot(command_prefix=PREFIX, self_bot=True)
 bot.remove_command("help")
@@ -53,7 +54,7 @@ bot.load_extension("cogs.text")
 bot.load_extension("cogs.sharecmds")
 bot.load_extension("cogs.main")
 
-__consolecolour__ = "#E0E0E0"
+__consolecolour__ = "#A7A7A7"
 
 r_hex = __consolecolour__[1:3]
 g_hex = __consolecolour__[3:5]
@@ -82,17 +83,21 @@ def print_error(error):
 def restart_bot():
     python = sys.executable
     os.execl(python, python, * sys.argv)
+def split(word):
+    return list(word)
 
 @bot.event
 async def on_ready():
     os.system("cls")
-    os.system(f"title Shadow v{VERSION} ─ Logged into {bot.user.name}!")
+    os.system(f"title Shadow v{VERSION} ─ Logged into {bot.user.name}")
     print(fg.consoleColour + "")
     print(".▄▄ ·  ▄ .▄ ▄▄▄· ·▄▄▄▄        ▄▄▌ ▐ ▄▌".center(os.get_terminal_size().columns))
     print("▐█ ▀. ██▪▐█▐█ ▀█ ██▪ ██ ▪     ██· █▌▐█".center(os.get_terminal_size().columns))
     print("▄▀▀▀█▄██▀▐█▄█▀▀█ ▐█· ▐█▌ ▄█▀▄ ██▪▐█▐▐▌".center(os.get_terminal_size().columns))
     print("▐█▄▪▐███▌▐▀▐█ ▪▐▌██. ██ ▐█▌.▐▌▐█▌██▐█▌".center(os.get_terminal_size().columns))
     print(" ▀▀▀▀ ▀▀▀ · ▀  ▀ ▀▀▀▀▀•  ▀█▄▀▪ ▀▀▀▀ ▀▪".center(os.get_terminal_size().columns))
+    print("")
+    print(f"Shadow v{VERSION} logged into {bot.user.name}".center(os.get_terminal_size().columns))
     print("")
     print(fg.consoleColour + '─'*os.get_terminal_size().columns)
     print("")

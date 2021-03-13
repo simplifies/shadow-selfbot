@@ -1,5 +1,7 @@
 import discord
 import random
+import string
+import main
 from datetime import datetime
 from discord.ext import commands
 from main import PREFIX, bot, EMBEDCOLOUR
@@ -11,16 +13,29 @@ class Fun(commands.Cog):
 
     @commands.command(name="fun", description="All available fun commands.", usage="")
     async def fun(self, ctx):
-        embed = discord.Embed(title="🎢 Fun Commands", description=f"""
+        try:
+            embed = discord.Embed(title="🎢 Fun Commands", description=f"""
 `{PREFIX}`**coinflip** » Flip a coin!
 `{PREFIX}`**dice** » Roll a six sided dice.
 `{PREFIX}`**8ball [question]** » Ask the magic eight ball a question.
 `{PREFIX}`**pp [@user]** » Show someone's penis size.
-`{PREFIX}`**rps [move]** » Rock paper scissors.
-        """, color=EMBEDCOLOUR)
-        embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
-        embed.timestamp = datetime.now()
-        await ctx.send(embed=embed)
+`{PREFIX}`**rps [move]** » Rock paper scissors. 
+`{PREFIX}`**nitrogen (amount)** » Generate a nitro gift code.
+            """, color=EMBEDCOLOUR)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
+            embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.timestamp = datetime.now()
+            await ctx.send(embed=embed)
+        except discord.HTTPException:
+            await ctx.send(f"""**🎢 Fun Commands**
+
+`{PREFIX}`**coinflip** » Flip a coin!
+`{PREFIX}`**dice** » Roll a six sided dice.
+`{PREFIX}`**8ball [question]** » Ask the magic eight ball a question.
+`{PREFIX}`**pp [@user]** » Show someone's penis size.
+`{PREFIX}`**rps [move]** » Rock paper scissors. 
+`{PREFIX}`**nitrogen (amount)** » Generate a nitro gift code.
+""")
 
     @commands.command(name="coinflip", description="Flip a coin!", usage="")
     async def coinflip(self, ctx):
@@ -30,6 +45,7 @@ class Fun(commands.Cog):
         try:
             embed = discord.Embed(title=f"🪙 The coin landed on __{choice}__", color=EMBEDCOLOUR)
             embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
             embed.timestamp = datetime.now()
             await ctx.send(embed=embed)
         except discord.HTTPException:
@@ -42,6 +58,7 @@ class Fun(commands.Cog):
         try:
             embed = discord.Embed(title=f"🎲 The dice rolled __{choice}__", color=EMBEDCOLOUR)
             embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
             embed.timestamp = datetime.now()
             await ctx.send(embed=embed)
         except discord.HTTPException:
@@ -55,6 +72,7 @@ class Fun(commands.Cog):
         try:
             embed = discord.Embed(title=f"🎱 {choice}", color=EMBEDCOLOUR)
             embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
             embed.timestamp = datetime.now()
             await ctx.send(embed=embed)
         except discord.HTTPException:
@@ -67,6 +85,7 @@ class Fun(commands.Cog):
         try:
             embed = discord.Embed(title=f"🍆 {user.name}'s pp size: {choice}", color=EMBEDCOLOUR)
             embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
             embed.timestamp = datetime.now()
             await ctx.send(embed=embed)
         except discord.HTTPException:
@@ -83,24 +102,27 @@ class Fun(commands.Cog):
             if player == "Rock":
                 if computer == "Paper":
                     try:
-                        embed = discord.Embed(title=f"You lost. {computer} covers {player}", colour=discord.Color.blue())
+                        embed = discord.Embed(title=f"You lost. {computer} covers {player}", color=EMBEDCOLOUR)
                         embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+                        embed.set_thumbnail(url=main.EMBEDIMAGE)
                         embed.timestamp = datetime.now()
                         await ctx.send(embed=embed)
                     except discord.HTTPException:
                         await ctx.send(f"You lost. {computer} covers {player}.")
                 elif computer == "Scissors":
                     try:
-                        embed = discord.Embed(title=f"You won! {player} smashes {computer}", colour=discord.Color.blue())
+                        embed = discord.Embed(title=f"You won! {player} smashes {computer}", color=EMBEDCOLOUR)
                         embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+                        embed.set_thumbnail(url=main.EMBEDIMAGE)
                         embed.timestamp = datetime.now()
                         await ctx.send(embed=embed)
                     except discord.HTTPException:
                         await ctx.send(f"You won! {player} smashes {computer}.")
                 elif computer == "Rock":
                     try:
-                        embed = discord.Embed(title=f"It was a tie!", colour=discord.Color.blue())
+                        embed = discord.Embed(title=f"It was a tie!", color=EMBEDCOLOUR)
                         embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+                        embed.set_thumbnail(url=main.EMBEDIMAGE)
                         embed.timestamp = datetime.now()
                         await ctx.send(embed=embed)
                     except discord.HTTPException:
@@ -109,24 +131,27 @@ class Fun(commands.Cog):
             elif player == "Paper":
                 if computer == "Rock":
                     try:
-                        embed = discord.Embed(title=f"You won! {player} covers {computer}", colour=discord.Color.blue())
+                        embed = discord.Embed(title=f"You won! {player} covers {computer}", color=EMBEDCOLOUR)
                         embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+                        embed.set_thumbnail(url=main.EMBEDIMAGE)
                         embed.timestamp = datetime.now()
                         await ctx.send(embed=embed)
                     except discord.HTTPException:
                         await ctx.send(f"You won! {player} covers {computer}.")
                 elif computer == "Scissors":
                     try:
-                        embed = discord.Embed(title=f"You lost. {computer} cuts {player}", colour=discord.Color.blue())
+                        embed = discord.Embed(title=f"You lost. {computer} cuts {player}", color=EMBEDCOLOUR)
                         embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+                        embed.set_thumbnail(url=main.EMBEDIMAGE)
                         embed.timestamp = datetime.now()
                         await ctx.send(embed=embed)
                     except discord.HTTPException:
                         await ctx.send(f"You lost. {computer} cuts {player}.")
                 elif computer == "Paper":
                     try:
-                        embed = discord.Embed(title=f"It was a tie!", colour=discord.Color.blue())
+                        embed = discord.Embed(title=f"It was a tie!", color=EMBEDCOLOUR)
                         embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+                        embed.set_thumbnail(url=main.EMBEDIMAGE)
                         embed.timestamp = datetime.now()
                         await ctx.send(embed=embed)
                     except discord.HTTPException:
@@ -135,8 +160,9 @@ class Fun(commands.Cog):
             elif player == "Scissors":
                 if computer == "Paper":
                     try:
-                        embed = discord.Embed(title=f"You won! {player} cuts {computer}", colour=discord.Color.blue())
+                        embed = discord.Embed(title=f"You won! {player} cuts {computer}", color=EMBEDCOLOUR)
                         embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+                        embed.set_thumbnail(url=main.EMBEDIMAGE)
                         embed.timestamp = datetime.now()
                         await ctx.send(embed=embed)
                     except discord.HTTPException:
@@ -144,16 +170,18 @@ class Fun(commands.Cog):
 
                 elif computer == "Rock":
                     try:
-                        embed = discord.Embed(title=f"You lost. {computer} smashes {player}", colour=discord.Color.blue())
+                        embed = discord.Embed(title=f"You lost. {computer} smashes {player}", color=EMBEDCOLOUR)
                         embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+                        embed.set_thumbnail(url=main.EMBEDIMAGE)
                         embed.timestamp = datetime.now()
                         await ctx.send(embed=embed)
                     except discord.HTTPException:
                         await ctx.send(f"You lost. {computer} smashes {player}.")
                 elif computer == "Scissors":
                     try:
-                        embed = discord.Embed(title=f"It was a tie!", colour=discord.Color.blue())
+                        embed = discord.Embed(title=f"It was a tie!", color=EMBEDCOLOUR)
                         embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+                        embed.set_thumbnail(url=main.EMBEDIMAGE)
                         embed.timestamp = datetime.now()
                         await ctx.send(embed=embed)
                     except discord.HTTPException:
@@ -162,8 +190,9 @@ class Fun(commands.Cog):
             # If no move or an invalid move was chosen then print that instead of printing an ugly error.
             else:
                 try:
-                    embed = discord.Embed(title=f"That was an invalid play!", colour=discord.Color.blue())
+                    embed = discord.Embed(title=f"That was an invalid play!", color=EMBEDCOLOUR)
                     embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+                    embed.set_thumbnail(url=main.EMBEDIMAGE)
                     embed.timestamp = datetime.now()
                     await ctx.send(embed=embed)
                 except discord.HTTPException:
@@ -171,12 +200,30 @@ class Fun(commands.Cog):
 
         else:
             try:
-                embed = discord.Embed(title=f"That was an invalid play!", colour=discord.Color.blue())
+                embed = discord.Embed(title=f"That was an invalid play!", color=EMBEDCOLOUR)
                 embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+                embed.set_thumbnail(url=main.EMBEDIMAGE)
                 embed.timestamp = datetime.now()
                 await ctx.send(embed=embed)
             except discord.HTTPException:
                 await ctx.send(f"That was an invalid play!")
+
+    @commands.command(name="nitrogen", description="Generate a nitro gift code.", usage=" (amount)")
+    async def nitrogen(self, ctx, amount: int = 1):
+        text = ""
+        for _ in range(amount):
+            code = ''.join(random.choice(string.ascii_letters + string.digits) for i in range(16))
+            nitro = "https://discord.gift/" + code
+            text += f"{nitro}\n"
+
+        try:
+            embed = discord.Embed(title=f"🎁 Nitro Generator", description=text, color=EMBEDCOLOUR)
+            embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
+            embed.timestamp = datetime.now()
+            await ctx.send(embed=embed)
+        except discord.HTTPException:
+            await ctx.send(f"**🎁 Nitro Generator**\n{text}")
 
 def setup(bot):
     bot.add_cog(Fun(bot))

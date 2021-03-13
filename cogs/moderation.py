@@ -1,4 +1,5 @@
 import discord
+import main
 from datetime import datetime
 from discord.ext import commands
 from main import PREFIX, bot, EMBEDCOLOUR
@@ -10,17 +11,29 @@ class Moderation(commands.Cog):
 
     @commands.command(name="moderation", description="All available moderation commands.", usage="")
     async def moderation(self, ctx):
-        embed = discord.Embed(title="👮 Moderation Commands", description=f"""
+        try:
+            embed = discord.Embed(title="👮 Moderation Commands", description=f"""
 `{PREFIX}`**ban [@member] (reason)** » Ban a user from the command server.
 `{PREFIX}`**kick [@member] (reason)** » Kick a user from the command server.
 `{PREFIX}`**mute [@member] (reason)** » Mute a user from the command server.
 `{PREFIX}`**unmute [@member] (reason)** » Unmute a user from the command server.
 `{PREFIX}`**lock (reason)** » Lock the command channel.
 `{PREFIX}`**unlock (reason)** » Unlock the command channel.
-        """, color=EMBEDCOLOUR)
-        embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
-        embed.timestamp = datetime.now()
-        await ctx.send(embed=embed)
+            """, color=EMBEDCOLOUR)
+            embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
+            embed.timestamp = datetime.now()
+            await ctx.send(embed=embed)
+        except discord.HTTPException:
+            await ctx.send(f"""**👮 Moderation Commands**
+
+`{PREFIX}`**ban [@member] (reason)** » Ban a user from the command server.
+`{PREFIX}`**kick [@member] (reason)** » Kick a user from the command server.
+`{PREFIX}`**mute [@member] (reason)** » Mute a user from the command server.
+`{PREFIX}`**unmute [@member] (reason)** » Unmute a user from the command server.
+`{PREFIX}`**lock (reason)** » Lock the command channel.
+`{PREFIX}`**unlock (reason)** » Unlock the command channel.
+                            """)
 
     @commands.command(name="ban", description="Ban a user from the command server.", usage=" [@member] (reason)")
     async def ban(self, ctx, member: discord.Member, *, reason="Undefined"):
@@ -31,6 +44,7 @@ class Moderation(commands.Cog):
                 embed = discord.Embed(title=f"🔨 {member.name} was banned!", description=f"Reason: {reason}",
                                       color=EMBEDCOLOUR)
                 embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+                embed.set_thumbnail(url=main.EMBEDIMAGE)
                 embed.timestamp = datetime.now()
                 await ctx.send(embed=embed)
             except discord.HTTPException:
@@ -45,6 +59,7 @@ class Moderation(commands.Cog):
                 embed = discord.Embed(title=f"👢 {member.name} was kicked!", description=f"Reason: {reason}",
                                       color=EMBEDCOLOUR)
                 embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+                embed.set_thumbnail(url=main.EMBEDIMAGE)
                 embed.timestamp = datetime.now()
                 await ctx.send(embed=embed)
             except discord.HTTPException:
@@ -60,6 +75,7 @@ class Moderation(commands.Cog):
                 embed = discord.Embed(title=f"🤐 {member.name} was muted!", description=f"Reason: {reason}",
                                       color=EMBEDCOLOUR)
                 embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+                embed.set_thumbnail(url=main.EMBEDIMAGE)
                 embed.timestamp = datetime.now()
                 await ctx.send(embed=embed)
             except discord.HTTPException:
@@ -75,6 +91,7 @@ class Moderation(commands.Cog):
                 embed = discord.Embed(title=f"😀 {member.name} was unmuted!", description=f"Reason: {reason}",
                                       color=EMBEDCOLOUR)
                 embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+                embed.set_thumbnail(url=main.EMBEDIMAGE)
                 embed.timestamp = datetime.now()
                 await ctx.send(embed=embed)
             except discord.HTTPException:
@@ -87,6 +104,7 @@ class Moderation(commands.Cog):
             embed = discord.Embed(title=f"🔒 Locked Channel!", description=f"Reason: {reason}",
                                   color=EMBEDCOLOUR)
             embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
             embed.timestamp = datetime.now()
             await ctx.send(embed=embed)
         except discord.HTTPException:
@@ -99,6 +117,7 @@ class Moderation(commands.Cog):
             embed = discord.Embed(title=f"🔓 Unlocked Channel!", description=f"Reason: {reason}",
                                   color=EMBEDCOLOUR)
             embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
             embed.timestamp = datetime.now()
             await ctx.send(embed=embed)
         except discord.HTTPException:

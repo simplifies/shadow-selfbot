@@ -11,8 +11,9 @@ class Misc(commands.Cog):
 
     @commands.command(name="misc", description="Main misc command.", usage="")
     async def misc(self, ctx):
-        embed = discord.Embed(title="🧨 Misc Commands",
-                              description=f"""
+        try:
+            embed = discord.Embed(title="🧨 Misc Commands",
+                                  description=f"""
 `{PREFIX}`**settings** » Shows selfbot settings.
 `{PREFIX}`**restart** » Restart Shadow selfbot.
 `{PREFIX}`**playing [status]** » Set a playing status.
@@ -21,11 +22,24 @@ class Misc(commands.Cog):
 `{PREFIX}`**watching [status]** » Set a watching status.
 `{PREFIX}`**clearstatus** » Clear your status. 
 `{PREFIX}`**nick [nickname]** » Change your nickname.
-""",
-                              color=EMBEDCOLOUR)
-        embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
-        embed.timestamp = datetime.now()
-        await ctx.send(embed=embed)
+    """,
+                                  color=EMBEDCOLOUR)
+            embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
+            embed.timestamp = datetime.now()
+            await ctx.send(embed=embed)
+        except discord.HTTPException:
+            await ctx.send(f"""**🧨 Misc Commands**
+
+`{PREFIX}`**settings** » Shows selfbot settings.
+`{PREFIX}`**restart** » Restart Shadow selfbot.
+`{PREFIX}`**playing [status]** » Set a playing status.
+`{PREFIX}`**streaming [status]** » Set a streaming status.
+`{PREFIX}`**listening [status]** » Set a listening status.
+`{PREFIX}`**watching [status]** » Set a watching status.
+`{PREFIX}`**clearstatus** » Clear your status. 
+`{PREFIX}`**nick [nickname]** » Change your nickname.
+                        """)
 
     @commands.command(name="settings", description="Shows selfbot settings.", usage="")
     async def settings(self, ctx):
@@ -38,17 +52,19 @@ class Misc(commands.Cog):
             embed.add_field(name="🧩 Prefix", value=f"```{bot.command_prefix}```")
             embed.add_field(name="🧬 Version", value=f"```{VERSION}```")
             embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
             embed.timestamp = datetime.now()
             await ctx.send(embed=embed)
         except discord.HTTPException:
             await ctx.send(f"**⚙ Settings**\nCommands: {totalcommands}\nPrefix: {Ghost.command_prefix}")
 
-    @commands.command(name="restart", description="Restart Shadow selfbot.", usage="", aliases=["reboot"])
+    @commands.command(name="restart", description="Restart Shadow selfbot.", usage="", aliases=["reboot", "reload"])
     async def restart(self, ctx):
         try:
             embed = discord.Embed(title="🔁 Restarting...",
                                   color=EMBEDCOLOUR)
             embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
             embed.timestamp = datetime.now()
             await ctx.send(embed=embed)
         except discord.HTTPException:
@@ -63,6 +79,7 @@ class Misc(commands.Cog):
                                   description=f"Playing status changed to `{status}`",
                                   color=EMBEDCOLOUR)
             embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
             embed.timestamp = datetime.now()
             await ctx.send(embed=embed)
         except discord.HTTPException:
@@ -76,6 +93,7 @@ class Misc(commands.Cog):
                                   description=f"Streaming status changed to `{status}`",
                                   color=EMBEDCOLOUR)
             embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
             embed.timestamp = datetime.now()
             await ctx.send(embed=embed)
         except discord.HTTPException:
@@ -89,6 +107,7 @@ class Misc(commands.Cog):
                                   description=f"Listening status changed to `{status}`",
                                   color=EMBEDCOLOUR)
             embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
             embed.timestamp = datetime.now()
             await ctx.send(embed=embed)
         except discord.HTTPException:
@@ -102,6 +121,7 @@ class Misc(commands.Cog):
                                   description=f"Watching status changed to `{status}`",
                                   color=EMBEDCOLOUR)
             embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
             embed.timestamp = datetime.now()
             await ctx.send(embed=embed)
         except discord.HTTPException:
@@ -114,6 +134,7 @@ class Misc(commands.Cog):
             embed = discord.Embed(title="🗑 Status Cleared",
                                   color=EMBEDCOLOUR)
             embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
             embed.timestamp = datetime.now()
             await ctx.send(embed=embed)
         except discord.HTTPException:
@@ -127,6 +148,7 @@ class Misc(commands.Cog):
                                   description=f"Nickname change to `{nickname}`",
                                   color=EMBEDCOLOUR)
             embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
             embed.timestamp = datetime.now()
             await ctx.send(embed=embed)
         except discord.HTTPException:

@@ -1,5 +1,6 @@
 import discord
 import random
+import main
 from datetime import datetime
 from discord.ext import commands
 from main import PREFIX, bot, EMBEDCOLOUR
@@ -11,13 +12,21 @@ class Info(commands.Cog):
 
     @commands.command(name="info", description="All available info commands.", usage="")
     async def info(self, ctx):
-        embed = discord.Embed(title="💁 Info Commands", description=f"""
+        try:
+            embed = discord.Embed(title="💁 Info Commands", description=f"""
 `{PREFIX}`**userinfo [@user]** » Show information of a discord user.
 `{PREFIX}`**serverinfo** » Show information of the command server.
-        """, color=EMBEDCOLOUR)
-        embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
-        embed.timestamp = datetime.now()
-        await ctx.send(embed=embed)
+            """, color=EMBEDCOLOUR)
+            embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
+            embed.set_thumbnail(url=main.EMBEDIMAGE)
+            embed.timestamp = datetime.now()
+            await ctx.send(embed=embed)
+        except discord.HTTPException:
+            await ctx.send(f"""**💁 Info Commands**
+
+`{PREFIX}`**userinfo [@user]** » Show information of a discord user.
+`{PREFIX}`**serverinfo** » Show information of the command server.
+            """)
 
     @commands.command(name="userinfo", description="Show information of a discord user.", usage=" [@user]")
     async def userinfo(self, ctx, user: discord.User):
