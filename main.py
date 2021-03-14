@@ -1,7 +1,8 @@
-VERSION = "1.4"
+VERSION = "1.5" # DONT EDIT THIS!
 
 import os
 import sys
+
 os.system("cls")
 os.system(f"title Loading Shadow v{VERSION}...")
 
@@ -36,30 +37,35 @@ if json.load(open("config/config.json"))["prefix"] == "":
 
 TOKEN = json.load(open("config/config.json"))["token"]
 PREFIX = json.load(open("config/config.json"))["prefix"]
+THEME = json.load(open("config/config.json"))["theme"]
 
 SHAREPREFIX = json.load(open("config/config.json"))["share_commands"]["prefix"]
 SHARECOMMANDS = json.load(open("config/config.json"))["share_commands"]["enabled"]
 
-PUREEMBEDCOLOUR = "#A7A7A7"
+PUREEMBEDCOLOUR = json.load(open(f"themes/{THEME}.json"))["embed_colour"]
 EMBEDCOLOUR = int(PUREEMBEDCOLOUR.replace("#", "0x"), 0)
-EMBEDIMAGE = "https://ghost.cool/assets/shadow.jpg"
+EMBEDIMAGE = json.load(open(f"themes/{THEME}.json"))["embed_image"]
+EMBEDTITLE = json.load(open(f"themes/{THEME}.json"))["embed_title"]
+GLOBALEMOJI = json.load(open(f"themes/{THEME}.json"))["global_emoji"]
+
+giveawayBots = [294882584201003009, 716967712844414996, 810270746797670462]
+giveawayJoinDelay = 25
 
 bot = commands.Bot(command_prefix=PREFIX, self_bot=True)
 bot.remove_command("help")
+
 bot.load_extension("cogs.moderation")
 bot.load_extension("cogs.fun")
 bot.load_extension("cogs.info")
 bot.load_extension("cogs.misc")
 bot.load_extension("cogs.text")
 bot.load_extension("cogs.sharecmds")
+bot.load_extension("cogs.events")
+bot.load_extension("cogs.themes")
 bot.load_extension("cogs.main")
 
 __consolecolour__ = "#A7A7A7"
-
-r_hex = __consolecolour__[1:3]
-g_hex = __consolecolour__[3:5]
-b_hex = __consolecolour__[5:7]
-fg.consoleColour = Style(RgbFg(int(r_hex, 16), int(g_hex, 16), int(b_hex, 16)))
+fg.consoleColour = Style(RgbFg(int(__consolecolour__[1:3], 16), int(__consolecolour__[3:5], 16), int(__consolecolour__[5:7], 16)))
 
 fg.cRed = Style(RgbFg(255, 81, 69))
 fg.cOrange = Style(RgbFg(255, 165, 69))
@@ -80,6 +86,8 @@ def print_sharecmd(user, command):
     print(f"{fg.consoleColour}[{fg.cWhite}" + datetime.now().strftime("%H:%M:%S") + f"{fg.consoleColour}]{fg.cWhite} | {fg.consoleColour}[{fg.cWhite}Share Command{fg.consoleColour}] {fg.cWhite}({user}) {command}")
 def print_error(error):
     print(f"{fg.consoleColour}[{fg.cWhite}" + datetime.now().strftime("%H:%M:%S") + f"{fg.consoleColour}]{fg.cWhite} | {fg.consoleColour}[{fg.cWhite}Error{fg.consoleColour}] {fg.cWhite}{error}")
+def print_sniper(sniper, message):
+    print(f"{fg.consoleColour}[{fg.cWhite}" + datetime.now().strftime("%H:%M:%S") + f"{fg.consoleColour}]{fg.cWhite} | {fg.consoleColour}[{fg.cWhite}{sniper}{fg.consoleColour}] {fg.cWhite}{message}")
 def restart_bot():
     python = sys.executable
     os.execl(python, python, * sys.argv)
@@ -101,7 +109,6 @@ async def on_ready():
     print("")
     print(fg.consoleColour + '─'*os.get_terminal_size().columns)
     print("")
-
 
 @bot.event
 async def on_command(ctx):

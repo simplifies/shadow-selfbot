@@ -1,6 +1,7 @@
 {
     "token": "",
     "prefix": "",
+    "theme": "Shadow",
     "share_commands": {
         "prefix": "s!",
         "enabled": false

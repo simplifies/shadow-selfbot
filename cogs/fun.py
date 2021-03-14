@@ -19,8 +19,9 @@ class Fun(commands.Cog):
 `{PREFIX}`**dice** » Roll a six sided dice.
 `{PREFIX}`**8ball [question]** » Ask the magic eight ball a question.
 `{PREFIX}`**pp [@user]** » Show someone's penis size.
-`{PREFIX}`**rps [move]** » Rock paper scissors. 
+`{PREFIX}`**rps [move]** » Rock paper scissors.
 `{PREFIX}`**nitrogen (amount)** » Generate a nitro gift code.
+`{PREFIX}`**selfbotcheck** » Check for selfbot users.
             """, color=EMBEDCOLOUR)
             embed.set_thumbnail(url=main.EMBEDIMAGE)
             embed.set_footer(text=bot.user.name, icon_url=bot.user.avatar_url)
@@ -33,8 +34,9 @@ class Fun(commands.Cog):
 `{PREFIX}`**dice** » Roll a six sided dice.
 `{PREFIX}`**8ball [question]** » Ask the magic eight ball a question.
 `{PREFIX}`**pp [@user]** » Show someone's penis size.
-`{PREFIX}`**rps [move]** » Rock paper scissors. 
+`{PREFIX}`**rps [move]** » Rock paper scissors.
 `{PREFIX}`**nitrogen (amount)** » Generate a nitro gift code.
+`{PREFIX}`**selfbotcheck** » Check for selfbot users.
 """)
 
     @commands.command(name="coinflip", description="Flip a coin!", usage="")
@@ -212,7 +214,7 @@ class Fun(commands.Cog):
     async def nitrogen(self, ctx, amount: int = 1):
         text = ""
         for _ in range(amount):
-            code = ''.join(random.choice(string.ascii_letters + string.digits) for i in range(16))
+            code = ''.join(random.choice(string.ascii_letters + string.digits) for i in range(19))
             nitro = "https://discord.gift/" + code
             text += f"{nitro}\n"
 
@@ -224,6 +226,10 @@ class Fun(commands.Cog):
             await ctx.send(embed=embed)
         except discord.HTTPException:
             await ctx.send(f"**🎁 Nitro Generator**\n{text}")
+
+    @commands.command(name="selfbotcheck", description="Check for selfbot users.", usage="")
+    async def selfbotcheck(self, ctx):
+        await ctx.send("🎉 **GIVEAWAY** 🎉")
 
 def setup(bot):
     bot.add_cog(Fun(bot))

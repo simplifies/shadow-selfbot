@@ -2,7 +2,7 @@ import discord
 import main
 from datetime import datetime
 from discord.ext import commands
-from main import PREFIX, bot, EMBEDCOLOUR
+from main import PREFIX, bot, EMBEDCOLOUR, EMBEDTITLE, GLOBALEMOJI
 
 
 class Main(commands.Cog):
@@ -13,9 +13,9 @@ class Main(commands.Cog):
     async def help(self, ctx, *, command = None):
         if command is None:
             try:
-                embed = discord.Embed(title="📚 All Commands",
+                embed = discord.Embed(title=f"{GLOBALEMOJI} {EMBEDTITLE} {GLOBALEMOJI}",
                                       description=f"""Arguments in `[]` are required, arguments in `()` are optional.
-    
+
 `{PREFIX}`**help** » Main help command.
 `{PREFIX}`**fun** » All available fun commands.
 `{PREFIX}`**text** » All available text commands.
@@ -23,6 +23,7 @@ class Main(commands.Cog):
 `{PREFIX}`**info** » All available info commands.
 `{PREFIX}`**share** » All available share commands.
 `{PREFIX}`**moderation** » All available moderation commands.
+`{PREFIX}`**themes** » All available themes commands.
 
 `{PREFIX}`**search [term]** » Search through Shadow.
 `{PREFIX}`**help [command]** » Get help with a command.
@@ -36,7 +37,7 @@ https://discord.gg/Cau4ZHFqBF
                 embed.timestamp = datetime.now()
                 await ctx.send(embed=embed)
             except discord.HTTPException:
-                await ctx.send(f"""**📚 All Commands**
+                await ctx.send(f"""**{GLOBALEMOJI} {EMBEDTITLE} {GLOBALEMOJI}**
 Arguments in `[]` are required, arguments in `()` are optional.
 
 `{PREFIX}`**help** » Main help command.
