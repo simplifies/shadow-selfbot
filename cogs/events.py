@@ -16,19 +16,15 @@ class Events(commands.Cog):
         # Discord Gift sniper
         if 'discord.gift/' in message.content:
             code = message.content[message.content.find('discord.gift/') + 13:40]
-            if len(code) == 16 or len(code) == 19:
+            if str(len(code)) in ['16', '19']:
                 try:
                     main.print_sniper("Sniper", f"Gift Code Sniper:\n{main.fg.cYellow}Link: {main.fg.cGrey}discord.gift/{code}\n{main.fg.cYellow}Message Author: {main.fg.cGrey}{message.author.name}#{message.author.discriminator}\n{main.fg.cYellow}Channel: {main.fg.cGrey}#{message.channel.name}\n{main.fg.cYellow}Server: {main.fg.cGrey}{message.guild.name}")
                 except:
                     main.print_sniper("Sniper", f"Gift Code Sniper:\n{main.fg.cYellow}Link: {main.fg.cGrey}discord.gift/{code}\n{main.fg.cYellow}Message Author: {main.fg.cGrey}{message.author.name}#{message.author.discriminator}\n{main.fg.cYellow}Channel: {main.fg.cGrey}{message.channel}")
 
         # Giveaway sniper
-        gb = False
-        for giveawayBot in main.giveawayBots:
-            if message.author.id == giveawayBot:
-                gb = True
 
-        if 'GIVEAWAY' in message.content and message.author.bot and gb is True:
+        if 'GIVEAWAY' in message.content and message.author.bot and message.author.id in main.giveawayBots:
             joinTimePretty = timedelta(0, main.giveawayJoinDelay)
             main.print_sniper("Sniper", f"Giveaway Sniper:\n{main.fg.cYellow}Channel: {main.fg.cGrey}#{message.channel.name}\n{main.fg.cYellow}Server: {main.fg.cGrey}{message.guild.name}\n{main.fg.cYellow}Joining In: {main.fg.cGrey}{joinTimePretty}")
             await asyncio.sleep(main.giveawayJoinDelay)
